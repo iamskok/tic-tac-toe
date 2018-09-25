@@ -1,0 +1,24 @@
+.Item {
+	margin: 2px;
+	height: 10vw;
+	width: 10vw;
+	background-color: #fff;
+}
+
+.Item-sign--zero,
+.Item-sign--cross,
+.Item-sign--empty {
+	font-size: 72px;
+	height: 10vw;
+	width: 10vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: default;
+}
+
+.Item-sign--empty:hover {
+	transition: all 0.1s ease-out;
+	background-color: #ff5536;
+	cursor: pointer;
+}

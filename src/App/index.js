@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 import io from 'socket.io-client';
-
+import Field from '../Field';
+import '../index.css';
 import './App.css';
+
+let data = [
+	['z', 'c', 'c'], 
+	['e', 'z', 'c'], 
+	['e', 'e', 'z']
+];
 
 class App extends Component {
 	componentDidMount() {
@@ -21,7 +28,7 @@ class App extends Component {
 	render() {
 		return (
 			<div className="App">
-				Hello World
+				<Field data={data} />
 			</div>
 		);
 	}
