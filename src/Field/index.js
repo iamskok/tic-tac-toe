@@ -5,22 +5,10 @@ import './Field.css';
 export default class Field extends Component {
 	constructor(props) {
 		super(props);
-		this.handleItemClick = this.handleItemClick.bind(this);	
 	}
 
-	handleItemClick(i, j) {
-		const data = this.props.data;
-
-		if (data[i][j] === 'e') {
-			data[i][j] = 'c';
-		}
-
-		this.forceUpdate();
-	}
-	
 	render() {
 		const data = this.props.data;
-		
 		return (
 			<div className="Field">
 				{
@@ -28,15 +16,15 @@ export default class Field extends Component {
 						<div className="Field-row" key={i}>
 							{row.map((item, j) => 
 								<Item 
-									value={item} 
+									value={item}
 									key={j} 
-									handleClick={() => this.handleItemClick(i, j)} 
+									handleClick={() => this.props.handleItemClick(i, j)} 
 								/>
 							)}
 						</div>
 					)
 				}
 			</div>
-		)
+		);
 	}
 }
