@@ -8,7 +8,9 @@
 .Item-sign--zero,
 .Item-sign--cross,
 .Item-sign--empty {
-	font-size: 72px;
+	padding-top: 0.7vw;
+	padding-left: 0.15vw;
+	font-size: 5vw;
 	height: 10vw;
 	width: 10vw;
 	display: flex;
