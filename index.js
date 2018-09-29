@@ -7,27 +7,65 @@ const app = express();
 const server = http.Server(app);
 const io = require('socket.io')(server);
 
-let field = [
-	['e', 'e', 'e'],
-	['e', 'e', 'e'],
-	['e', 'e', 'e']
-];
+let field, turn, turnNum;
 
-let turn = 'c';
+// for 3 * 3 field
+const SIZE = 3;
+const crossString = Array(SIZE).fill('c').join('');
+const zeroString = Array(SIZE).fill('z').join('');
+
+function init() {
+	turn = 'c';
+	turnNum = 1;
+	// generate 2D array with e's
+	field = Array(SIZE).fill(0).map(item => Array(SIZE).fill('e'));
+}
+
+init();
 
 function getWinner(field) {
-	for (let i = 0; i < field.length; i++) {
-		const s = field[i].join('');
-		const c = Array(field[i].length).fill('c').join('');
-		const z = Array(field[i].length).fill('z').join('');
-		if (s === z) {
+	// horizontal match
+	for (let i = 0; i < SIZE; i++) {
+		const str = field[i].join('');
+		
+		if (str === zeroString) {
 			return 'z';
 		}
-		if (s === c) {
+		if (str === crossString) {
 			return 'c';
 		}
 	}
+	// veritcal match
+	for (let i = 0; i < SIZE; i++) {
+		let str = '';
+		for (let j = 0; j < SIZE; j++) {
+			str += field[j][i];
+		}
+		if (str === zeroString) {
+			return 'z';
+		}
+		if (str === crossString) {
+			return 'c';
+		}
+	}
+	// diagonal match
+	let str1 = '';
+	let str2 = '';
+	for (let i = 0; i < SIZE; i++) {
+		str1 += field[i][i];
+		str2 += field[SIZE - i - 1][i];
+	}
+	if (str1 === zeroString || str2 === zeroString) {
+		return 'z';
+	}
+	if (str1 === crossString || str2 === crossString) {
+		return 'c';
+	}
 
+	if (!field.join().includes('e')) {
+		return 'd';
+	}
+	
 	return null;
 }
 
@@ -46,6 +84,10 @@ io.on('connection', function(socket) {
 	console.log('Web socket');
 	socket.emit('load', field);
 	
+	socket.on('get-field', function(data) {
+		socket.emit('get-field', field);
+	});
+
 	socket.on('action', function(data) {
 		const i = data[0];
 		const j = data[1];
@@ -60,16 +102,28 @@ io.on('connection', function(socket) {
 				turn = 'c'
 			}
 
-			const winner = getWinner(field);
+			let winner = null;
+			// Check winner only after 6 turns
+			if (turnNum >= (SIZE * 2 - 1)) {
+				winner = getWinner(field);
+			}
+			
+			console.log('winner', winner);
 
 			answer.winner = winner;
 			answer.field = field;
 			answer.success = true;
+			turnNum++;
+
+			// if someone won start a new game
+			if (['c','z','d'].includes(winner)) {
+				init();
+			}
 		} else {
 			answer.success = false;
 		}
 
-		socket.emit('action', answer);
+		io.emit('action', answer);
 	});
 });
 
