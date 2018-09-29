@@ -46,19 +46,27 @@ class App extends Component {
 				});
 
 				if (data.winner) {
-					if (data.winner === 'c') {
-						setTimeout(() => alert('❌ won!'), 100);
-					} else if (data.winner === 'z') {
-						setTimeout(() => alert('⭕️ won!'), 100);
-					} else {
-
-					}
+					setTimeout(() => {
+						if (data.winner === 'c') {
+							alert('❌❌❌ WON');
+						} else if (data.winner === 'z') {
+							alert('⭕️⭕️⭕️ WON');
+						} else if (data.winner === 'd') {
+							alert('❌/ ⭕️ DRAW');
+						}
+						
+						socket.emit('get-field');
+					}, 100);
 				}
 			}
 		});
 
-		socket.on('disconnect', function () {
-			alert('Server disconnected');
+		socket.on('get-field', data => {
+			this.setState({data});
+		});
+
+		socket.on('disconnect', function() {
+			console.log('Server disconnected');
 		});
 	}
 
