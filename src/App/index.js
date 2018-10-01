@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import io from 'socket.io-client';
 import Field from '../Field';
 import '../index.css';
-import './App.css';
+import './styles.css';
 
 class App extends Component {
 	constructor(props) {

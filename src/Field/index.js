@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Item from '../Item';
-import './Field.css';
+import './styles.css';
 
 export default class Field extends Component {
 	constructor(props) {
