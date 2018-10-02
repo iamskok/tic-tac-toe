@@ -1,29 +1,38 @@
 import React, { Component } from 'react';
 import io from 'socket.io-client';
 import Field from '../Field';
+import Chat from '../Chat';
 import '../index.css';
 import './styles.css';
 
-class App extends Component {
+export default class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			data: null
+			data: null,
+			messages: []
 		}
 
 		this.handleItemClick = this.handleItemClick.bind(this);
+		this.sendMessage = this.sendMessage.bind(this);
 	}
 
 	handleItemClick(i, j) {
 		this.socket.emit('action', [i, j]);
 	}
 
+	sendMessage(username, message) {
+		this.socketChat.emit('new_message', {
+			username,
+			message
+		});
+	}
+
 	componentDidMount() {
 		const socket = io('http://localhost:5000?token=mysecrettoken1');
-		console.log('-');
 		this.socket = socket;
 		
-		socket.on('connect', (a, b) => {
+		socket.on('connect', () => {
 			console.log('Server connected');
 		});
 		
@@ -68,6 +77,18 @@ class App extends Component {
 		socket.on('disconnect', function() {
 			console.log('Server disconnected');
 		});
+
+		const socketChat = io('http://localhost:5000/chat?token=mysecrettoken1');
+		this.socketChat = socketChat;
+		socketChat.on('connect', () => {
+			console.log('Socket chat connected');
+		});
+		socketChat.on('new_message', (obj) => {
+			console.log('obj', obj);
+			this.setState({
+				messages: [...this.state.messages, obj]
+			});
+		});
 	}
 
 	render() {
@@ -81,9 +102,12 @@ class App extends Component {
 						handleItemClick={this.handleItemClick}
 					/>
 				}
+				
+				<Chat 
+					handleSubmit={this.sendMessage}
+					messages={this.state.messages}
+				/>
 			</div>
 		);
 	}
 }
-
-export default App;

@@ -1,4 +1,6 @@
 .Field {
+	margin-left: auto;
+	margin-right: auto;
 	padding: 2px;
 	background-color: #da0000;
 }

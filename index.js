@@ -6,13 +6,15 @@ const app = express();
 
 const server = http.Server(app);
 const io = require('socket.io')(server);
+const port = 5000;
 
 let field, turn, turnNum;
 
 // for 3 * 3 field
 const SIZE = 3;
-const crossString = Array(SIZE).fill('c').join('');
-const zeroString = Array(SIZE).fill('z').join('');
+const MATCH_SIZE = 3;
+const crossString = Array(MATCH_SIZE).fill('c').join('');
+const zeroString = Array(MATCH_SIZE).fill('z').join('');
 
 function init() {
 	turn = 'c';
@@ -27,11 +29,11 @@ function getWinner(field) {
 	// horizontal match
 	for (let i = 0; i < SIZE; i++) {
 		const str = field[i].join('');
-		
-		if (str === zeroString) {
+
+		if (str.includes(zeroString)) {
 			return 'z';
 		}
-		if (str === crossString) {
+		if (str.includes(crossString)) {
 			return 'c';
 		}
 	}
@@ -41,10 +43,10 @@ function getWinner(field) {
 		for (let j = 0; j < SIZE; j++) {
 			str += field[j][i];
 		}
-		if (str === zeroString) {
+		if (str.includes(zeroString)) {
 			return 'z';
 		}
-		if (str === crossString) {
+		if (str.includes(crossString)) {
 			return 'c';
 		}
 	}
@@ -55,10 +57,10 @@ function getWinner(field) {
 		str1 += field[i][i];
 		str2 += field[SIZE - i - 1][i];
 	}
-	if (str1 === zeroString || str2 === zeroString) {
+	if (str1.includes(zeroString) || str2.includes(zeroString)) {
 		return 'z';
 	}
-	if (str1 === crossString || str2 === crossString) {
+	if (str1.includes(crossString) || str2.includes(crossString)) {
 		return 'c';
 	}
 
@@ -69,26 +71,26 @@ function getWinner(field) {
 	return null;
 }
 
-app.use('/static', express.static(path.join(__dirname, 'public')));
+app.use('/', express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
 	res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 io.use((socket, next) => {
 	let token = socket.handshake.query.token;
-	console.log('Websocket middleware!!!', token);
+	console.log('Websocket middleware:', token);
 	return next();
 });
 
-io.on('connection', function(socket) {
-	console.log('Web socket');
+io.on('connection', (socket) => {
+	// console.log('Web socket');
 	socket.emit('load', field);
 	
-	socket.on('get-field', function(data) {
+	socket.on('get-field', (data) => {
 		socket.emit('get-field', field);
 	});
 
-	socket.on('action', function(data) {
+	socket.on('action', (data) => {
 		const i = data[0];
 		const j = data[1];
 		const answer = {};
@@ -104,7 +106,7 @@ io.on('connection', function(socket) {
 
 			let winner = null;
 			// Check winner only after 6 turns
-			if (turnNum >= (SIZE * 2 - 1)) {
+			if (turnNum >= (MATCH_SIZE * 2 - 1)) {
 				winner = getWinner(field);
 			}
 			
@@ -127,6 +129,16 @@ io.on('connection', function(socket) {
 	});
 });
 
-server.listen(5000, () => {
-	console.log('Server started');
+const ioChat = io.of('/chat');
+ioChat.on('connection', (socket) => {
+	console.log('ioChat is connected');
+	socket.on('new_message', (obj) => {
+		console.log('obj:', obj);
+		ioChat.emit('new_message', obj);
+	});
 });
+
+server.listen(port, () => {
+	console.log('Server started on', port);
+});
+

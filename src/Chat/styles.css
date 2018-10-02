@@ -1,0 +1,15 @@
+.Chat {
+	display: flex;
+	width: 25vw;
+	flex-direction: column;
+	height: 100%;
+	border: 4px solid #da0000;
+	background-color: #eee;
+	overflow-y: auto;
+	overflow-x: hidden;
+	align-self: end;
+}
+
+.Chat-input {}
+.Chat-button {}
+.Chat-history {}
