@@ -1,0 +1,17 @@
+.Message {
+	padding-top: 5px;
+	padding-left: 5px;
+	font-size: 16px;
+}
+
+.Message-button {
+	color: #3737ff;
+	cursor: pointer;
+}
+
+.Message-button:hover {
+	font-weight: 700;
+}
+
+.Message-username {}
+.Message-body {}

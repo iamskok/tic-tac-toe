@@ -15,6 +15,7 @@ export default class App extends Component {
 
 		this.handleItemClick = this.handleItemClick.bind(this);
 		this.sendMessage = this.sendMessage.bind(this);
+		this.removeMessage = this.removeMessage.bind(this);
 	}
 
 	handleItemClick(i, j) {
@@ -25,6 +26,14 @@ export default class App extends Component {
 		this.socketChat.emit('new_message', {
 			username,
 			message
+		});
+	}
+
+	removeMessage(id) {
+		const messages = [...this.state.messages];
+		messages.splice(id, 1);
+		this.setState({
+			messages
 		});
 	}
 
@@ -106,6 +115,7 @@ export default class App extends Component {
 				<Chat 
 					handleSubmit={this.sendMessage}
 					messages={this.state.messages}
+					removeMessage={this.removeMessage}
 				/>
 			</div>
 		);

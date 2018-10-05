@@ -10,6 +10,21 @@
 	align-self: end;
 }
 
-.Chat-input {}
-.Chat-button {}
+.Chat-input {
+	padding: 5px;
+	font-size: 14px;
+}
+.Chat-button {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	padding: 5px;
+	font-size: 14px;
+	background-color: #3737ff;
+	cursor: pointer;
+}
+
+.Chat-button:hover {
+	color: #fff;
+}
+
 .Chat-history {}
