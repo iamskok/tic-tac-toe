@@ -38,7 +38,7 @@ export default class App extends Component {
 	}
 
 	componentDidMount() {
-		const socket = io('http://localhost:5000?token=mysecrettoken1');
+		const socket = io('https://iamskok-tic-tac-toe.glitch.me?token=mysecrettoken1');
 		this.socket = socket;
 		
 		socket.on('connect', () => {
@@ -87,7 +87,7 @@ export default class App extends Component {
 			console.log('Server disconnected');
 		});
 
-		const socketChat = io('http://localhost:5000/chat?token=mysecrettoken1');
+		const socketChat = io('https://iamskok-tic-tac-toe.glitch.me/chat?token=mysecrettoken1');
 		this.socketChat = socketChat;
 		socketChat.on('connect', () => {
 			console.log('Socket chat connected');
