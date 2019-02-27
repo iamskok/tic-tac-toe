@@ -1,10 +1,11 @@
 {
-	"name": "game",
-	"version": "1.0.0",
+	"name": "tic-tac-toe",
+	"version": "1.1.0",
 	"main": "index.js",
 	"license": "MIT",
 	"scripts": {
-		"dev": "webpack -w"
+		"watch": "webpack -w",
+		"build": "webpack"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.1.0",
