@@ -1,1 +1,1 @@
-npm run build && node index.js
+node index.js
