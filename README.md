@@ -1,8 +1,8 @@
 # [TIC-TAC-TOE](https://iamskok-tic-tac-toe.glitch.me/)
 
-### ❌&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⭕️
-### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;❓
-### ⭕️&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;❌
+### ❌&nbsp;&nbsp;&nbsp;&nbsp;❌&nbsp;&nbsp;&nbsp;&nbsp;⭕️
+### ⭕️&nbsp;&nbsp;&nbsp;&nbsp;🔥&nbsp;&nbsp;&nbsp;&nbsp;❌
+### ⭕️&nbsp;&nbsp;&nbsp;&nbsp;❌&nbsp;&nbsp;&nbsp;&nbsp;⭕️
 
 <br />
 
